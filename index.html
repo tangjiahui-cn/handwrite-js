@@ -15,7 +15,7 @@
     </style>
   </head>
   <body>
-    <div id="dom"></div>
+    <div id="dom" style="margin-top: 20px; margin-left: 20px;"></div>
     <script src="./lib/index.js"></script>
     <script type="module">
       import BeautifulSignature from './src/index';
@@ -24,7 +24,7 @@
       const dom = document.getElementById('dom');
       const beautifulSignature = new BeautifulSignature({
         width: 300,
-        height: 1000,
+        height: 600,
       });
 
       beautifulSignature.mount(dom);

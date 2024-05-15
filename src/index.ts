@@ -5,37 +5,24 @@
  * @date 2024/5/14
  */
 
-import { SignatureExecutor } from './types';
-import { WebExecutor } from './executor/webExecutor';
-import { MobileExecutor } from './executor/mobileExecutor';
-
-enum DEVICE_TYPE {
-  PC = 0,
-  MOBILE = 1,
-}
+import { Executor } from './executor';
 
 interface BeautifulSignatureConfig {
   width: number;
   height: number;
-  executor?: WebExecutor;
+  executor?: Executor;
 }
 
 export default class BeautifulSignature {
-  _deviceType: DEVICE_TYPE;
   _config: BeautifulSignatureConfig;
-  _executor: SignatureExecutor;
+  _executor: Executor;
 
   constructor(config: BeautifulSignatureConfig) {
     this._config = {
       width: config.width,
       height: config.height,
     };
-    this._deviceType = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)
-      ? DEVICE_TYPE.MOBILE
-      : DEVICE_TYPE.PC;
-    this._executor =
-      config?.executor ||
-      (this._deviceType === DEVICE_TYPE.PC ? new WebExecutor() : new MobileExecutor());
+    this._executor = new Executor();
   }
 
   public mount(dom: HTMLElement) {
