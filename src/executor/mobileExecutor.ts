@@ -44,9 +44,7 @@ export class MobileExecutor implements SignatureExecutor {
         that._startPoint = endPoint;
       }
 
-      if (e.cancelable) {
-        e.preventDefault();
-      }
+      e?.preventDefault?.();
     }
 
     function handleEnd(e) {

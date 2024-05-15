@@ -6,7 +6,7 @@
  * @description pc executor
  */
 import type { SignatureExecutor } from '../types';
-import drawBezierLine from '../utils/drawBezierLine'
+import drawBezierLine from '../utils/drawBezierLine';
 
 export class WebExecutor implements SignatureExecutor {
   private _points: Array<{ x: number; y: number }> = [];
@@ -41,9 +41,7 @@ export class WebExecutor implements SignatureExecutor {
         that._startPoint = endPoint;
       }
 
-      if (e.cancelable) {
-        e.preventDefault();
-      }
+      e?.preventDefault?.();
     }
 
     function handlePointerEnd(e) {
