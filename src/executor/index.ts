@@ -10,18 +10,17 @@ import BezierRender from '../render';
 import { isMobile } from '../utils/isMobile';
 
 export class Executor implements SignatureExecutor {
-  private _startPoint: { x: number; y: number } = null;
-  private _isDrawFinish: boolean = false;
-  private _canvasRect: DOMRect;
   private _unmount: () => void;
+  private _canvasRect: DOMRect;
   private _render: BezierRender = new BezierRender();
 
   public setCanvas(canvas: HTMLCanvasElement) {
+    const that = this;
     const startEvent = isMobile() ? 'touchstart' : 'pointerdown';
     const moveEvent = isMobile() ? 'touchmove' : 'pointermove';
 
+    let isStart = false;
     let handleStart;
-    const that = this;
     this._render.setCanvas(canvas);
     this._canvasRect = canvas.getBoundingClientRect();
     canvas.addEventListener(
@@ -30,6 +29,7 @@ export class Executor implements SignatureExecutor {
         const pos = that.getPos(e);
         that._render.reset();
         that._render.addPoint(pos);
+        isStart = true;
         canvas.addEventListener(moveEvent, handleMove);
         window.addEventListener('pointerup', handleEnd);
       }),
@@ -43,16 +43,18 @@ export class Executor implements SignatureExecutor {
       }
     }
 
-    function handleEnd(e) {
-      that._isDrawFinish = true;
-      that._startPoint = null;
+    function handleEnd() {
       canvas.removeEventListener(moveEvent, handleMove);
       window.removeEventListener('pointerup', handleEnd);
       that._render.reset();
+      isStart = false;
     }
 
     this._unmount = () => {
       canvas.removeEventListener(startEvent, handleStart);
+      if (isStart) {
+        handleEnd();
+      }
     };
   }
 
