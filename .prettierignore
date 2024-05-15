@@ -1,0 +1,11 @@
+*.yaml
+*.json
+
+node_modules
+*ignore
+*.md
+*.d.ts
+*.rc
+
+/packages/Icon/*.js
+docs-dist

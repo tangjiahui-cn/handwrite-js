@@ -16,11 +16,14 @@
   </head>
   <body>
     <div id="dom"></div>
+    <script src="./lib/index.js"></script>
     <script type="module">
-      import { BeautifulSignature } from './src/index';
+      // import BeautifulSignature from './src/index';
+      // import BeautifulSignature from './es';
+      // const BeautifulSignature = window.BeautifulSignature;
       const dom = document.getElementById('dom');
       const beautifulSignature = new BeautifulSignature({
-        width: 1000,
+        width: 300,
         height: 1000,
       });
 

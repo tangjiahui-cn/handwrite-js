@@ -17,9 +17,10 @@ enum DEVICE_TYPE {
 interface BeautifulSignatureConfig {
   width: number;
   height: number;
+  executor?: WebExecutor;
 }
 
-export class BeautifulSignature {
+export default class BeautifulSignature {
   _deviceType: DEVICE_TYPE;
   _config: BeautifulSignatureConfig;
   _executor: SignatureExecutor;
@@ -32,7 +33,9 @@ export class BeautifulSignature {
     this._deviceType = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)
       ? DEVICE_TYPE.MOBILE
       : DEVICE_TYPE.PC;
-    this._executor = this._deviceType === DEVICE_TYPE.PC ? new WebExecutor() : new MobileExecutor();
+    this._executor =
+      config?.executor ||
+      (this._deviceType === DEVICE_TYPE.PC ? new WebExecutor() : new MobileExecutor());
   }
 
   public mount(dom: HTMLElement) {
@@ -45,6 +48,10 @@ export class BeautifulSignature {
     dom.appendChild(canvas);
     this._executor.setCanvas(canvas);
   }
+
+  // operate
+  public clear() {}
+  public revoke() {}
 
   // get
   public getFile() {}
