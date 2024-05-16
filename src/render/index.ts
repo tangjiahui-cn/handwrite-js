@@ -3,17 +3,38 @@
  *
  * @author tangjiahui
  * @date 2024/5/15
+ * @description render pointer to canvas.
  */
 import { Point } from '../types';
 import drawBezierLine from '../utils/drawBezierLine';
+import throttle from '../utils/throttle';
+import DataFunneling from '../utils/dataFunneling';
+
+interface RenderPoint extends Point {
+  /** the time interval to last point. */
+  deltaTime: number;
+}
 
 export default class BezierRender {
   private lastTime: number = 0;
-  private points: Point[] = [];
+  private points: RenderPoint[] = [];
   private ctx: CanvasRenderingContext2D;
   private startPoint: Point = null;
+  private dataFunneling: DataFunneling;
 
-  public reset () {
+  constructor() {
+    this.dataFunneling = new DataFunneling({
+      interval: 10,
+    });
+
+    this.dataFunneling.on((data) => {
+      console.log('渲染点 -> ', data);
+      this.points.push(data);
+      this.flush();
+    });
+  }
+
+  public reset() {
     this.lastTime = 0;
     this.points = [];
     this.startPoint = null;
@@ -27,10 +48,11 @@ export default class BezierRender {
     const now = Date.now();
     // 间隔时间
     const deltaTime = this.lastTime ? now - this.lastTime : 0;
-    console.log('deltaTime: ', deltaTime);
     this.lastTime = now;
-    this.points.push(point);
-    this.flush();
+    this.dataFunneling.add({
+      ...point,
+      deltaTime,
+    });
   }
 
   private flush() {
@@ -51,9 +73,9 @@ export default class BezierRender {
 }
 
 // 设置ctx样式
-function setCtxStyle(ctx) {
+function setCtxStyle(ctx, width = 10) {
   ctx.strokeStyle = 'black';
-  ctx.lineWidth = 10;
+  ctx.lineWidth = width;
   ctx.lineJoin = 'round'; // 转折处圆形
   ctx.lineCap = 'round'; // 末端圆形
   return ctx;

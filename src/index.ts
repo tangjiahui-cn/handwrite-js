@@ -18,11 +18,11 @@ export default class BeautifulSignature {
   _executor: Executor;
 
   constructor(config: BeautifulSignatureConfig) {
+    this._executor = new Executor();
     this._config = {
       width: config.width,
       height: config.height,
     };
-    this._executor = new Executor();
   }
 
   public mount(dom: HTMLElement) {

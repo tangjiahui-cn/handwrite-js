@@ -3,7 +3,7 @@
  *
  * @author tangjiahui
  * @date 2024/5/14
- * @description move pointer executor
+ * @description collect the move points.
  */
 import type { SignatureExecutor } from '../types';
 import BezierRender from '../render';
@@ -20,7 +20,7 @@ export class Executor implements SignatureExecutor {
     const startEvent = _isMobile ? 'touchstart' : 'pointerdown';
 
     let isStart = false;
-    let handleStart;
+    let handleStart: (e: any) => void;
     this._render.setCanvas(canvas);
     this._canvasRect = canvas.getBoundingClientRect();
     canvas.addEventListener(

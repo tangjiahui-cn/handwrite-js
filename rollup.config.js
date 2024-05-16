@@ -14,6 +14,7 @@ const pkg = require('./package.json');
 
 /**
  * transform to hump style
+ *
  * @param lineStyle line-style string.
  * @param isFirstUpperCase is first character uppercase.
  * @return {string} hump-style string.
