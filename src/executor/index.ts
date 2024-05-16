@@ -16,8 +16,8 @@ export class Executor implements SignatureExecutor {
 
   public setCanvas(canvas: HTMLCanvasElement) {
     const that = this;
-    const startEvent = isMobile() ? 'touchstart' : 'pointerdown';
-    const moveEvent = isMobile() ? 'touchmove' : 'pointermove';
+    const _isMobile = isMobile();
+    const startEvent = _isMobile ? 'touchstart' : 'pointerdown';
 
     let isStart = false;
     let handleStart;
@@ -30,8 +30,10 @@ export class Executor implements SignatureExecutor {
         that._render.reset();
         that._render.addPoint(pos);
         isStart = true;
-        canvas.addEventListener(moveEvent, handleMove);
         window.addEventListener('pointerup', handleEnd);
+        _isMobile
+          ? canvas.addEventListener('touchmove', handleMove)
+          : window.addEventListener('pointermove', handleMove);
       }),
     );
 
@@ -44,8 +46,11 @@ export class Executor implements SignatureExecutor {
     }
 
     function handleEnd() {
-      canvas.removeEventListener(moveEvent, handleMove);
       window.removeEventListener('pointerup', handleEnd);
+      _isMobile
+        ? canvas.removeEventListener('touchmove', handleMove)
+        : window.removeEventListener('pointermove', handleMove);
+
       that._render.reset();
       isStart = false;
     }
@@ -65,8 +70,8 @@ export class Executor implements SignatureExecutor {
   private getPos(e) {
     e = e.touches?.[0] || e;
     return {
-      x: e?.clientX - (this._canvasRect?.x || 0),
-      y: e?.clientY - (this._canvasRect?.y || 0),
+      x: (e?.x || e?.clientX) - (this._canvasRect?.x || 0),
+      y: (e?.y || e?.clientY) - (this._canvasRect?.y || 0),
     };
   }
 }
