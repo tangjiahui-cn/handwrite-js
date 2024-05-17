@@ -1,6 +1,6 @@
 {
   "name": "beautiful-signature",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "type": "module",
   "main": "index.js",
@@ -9,6 +9,10 @@
     "dev": "vite",
     "build": "rollup -c rollup.config.js"
   },
+  "files": [
+    "es",
+    "lib"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
