@@ -12,7 +12,9 @@ export default function drawBezierLine(
   endPoint: Point,
   ctx: CanvasRenderingContext2D,
 ) {
+  ctx.beginPath();
   ctx.moveTo(startPoint.x, startPoint.y);
   ctx.quadraticCurveTo(controlPoint.x, controlPoint.y, endPoint.x, endPoint.y);
   ctx.stroke();
+  ctx.closePath();
 }

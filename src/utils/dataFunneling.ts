@@ -11,7 +11,7 @@ type Callback<T> = (data: T) => void;
 
 interface Config {
   /**
-   * data funneling interval, default 100ms
+   * data funneling interval
    */
   interval?: number;
 }
@@ -23,15 +23,19 @@ export default class DataFunneling<T = any> {
 
   constructor(config?: Config) {
     const that = this;
-    this.interval = config?.interval || 100;
-    this.throttleFn = throttle(
-      (data: T) => {
-        that.callbacks.forEach((callback: Callback<T>) => {
-          callback(data);
-        });
-      },
-      this.interval > 0 ? this.interval : 0,
-    );
+    this.interval = config?.interval;
+    this.throttleFn =
+      this.interval > 0
+        ? throttle((data: T) => {
+            that.callbacks.forEach((callback: Callback<T>) => {
+              callback(data);
+            });
+          }, this.interval)
+        : (data: T) => {
+            that.callbacks.forEach((callback: Callback<T>) => {
+              callback(data);
+            });
+          };
   }
 
   public add(data: T) {

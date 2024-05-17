@@ -13,6 +13,7 @@ export default function drawBezierLine(
   endPoint: Point,
   ctx: CanvasRenderingContext2D,
 ) {
+  ctx.beginPath();
   ctx.moveTo(startPoint.x, startPoint.y);
   ctx.bezierCurveTo(
     controlPoint1.x,
@@ -23,4 +24,5 @@ export default function drawBezierLine(
     endPoint.y,
   );
   ctx.stroke();
+  ctx.closePath();
 }
