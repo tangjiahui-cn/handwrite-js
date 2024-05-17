@@ -1,6 +1,6 @@
 export abstract class SignatureExecutor {
-  public setCanvas: (canvas: HTMLCanvasElement) => void;
-  public destroy: () => void;
+  public abstract setCanvas: (canvas: HTMLCanvasElement) => void;
+  public abstract destroy: () => void;
 }
 
 export interface Point {

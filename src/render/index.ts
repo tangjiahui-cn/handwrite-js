@@ -33,11 +33,11 @@ interface RenderPoint extends Point {
 export default class BezierRender {
   private lastTime: number = 0;
   private points: RenderPoint[] = [];
-  private ctx: CanvasRenderingContext2D;
-  private startPoint: Point = null;
+  private ctx: CanvasRenderingContext2D | null = null;
+  private startPoint: Point | null = null;
   private dataFunneling: DataFunneling<RenderPoint>;
 
-  private lastPoint: Point = null;
+  private lastPoint: Point | null = null;
   // 上次绘制宽度
   private lastWidth: number = 0;
 
@@ -123,11 +123,14 @@ export default class BezierRender {
     //   return;
     // }
 
-    drawBezierLine(this.startPoint || p1, controlPoint, endPoint, this.ctx);
+    if (this.ctx) {
+      drawBezierLine(this.startPoint || p1, controlPoint, endPoint, this.ctx);
+    }
     this.startPoint = endPoint;
   }
 
   setCtxStyle(width: number) {
+    if (!this.ctx) return;
     this.ctx.strokeStyle = 'black';
     this.ctx.lineJoin = 'round'; // 转折处圆形
     this.ctx.lineCap = 'round'; // 末端圆形

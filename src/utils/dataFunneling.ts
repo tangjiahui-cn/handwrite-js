@@ -23,7 +23,7 @@ export default class DataFunneling<T = any> {
 
   constructor(config?: Config) {
     const that = this;
-    this.interval = config?.interval;
+    this.interval = config?.interval || 0;
     this.throttleFn =
       this.interval > 0
         ? throttle((data: T) => {

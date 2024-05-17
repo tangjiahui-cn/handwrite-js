@@ -10,8 +10,8 @@ import BezierRender from '../render';
 import { isMobile } from '../utils/isMobile';
 
 export class Executor implements SignatureExecutor {
-  private _unmount: () => void;
-  private _canvasRect: DOMRect;
+  private _unmount: (() => void) | undefined;
+  private _canvasRect: DOMRect | undefined;
   private _render: BezierRender = new BezierRender();
 
   public setCanvas(canvas: HTMLCanvasElement) {
@@ -37,7 +37,7 @@ export class Executor implements SignatureExecutor {
       }),
     );
 
-    function handleMove(e) {
+    function handleMove(e: any) {
       that._render.addPoint(that.getPos(e));
 
       if (e.cancelable) {
@@ -67,7 +67,7 @@ export class Executor implements SignatureExecutor {
     this._unmount?.();
   }
 
-  private getPos(e) {
+  private getPos(e: any) {
     e = e.touches?.[0] || e;
     return {
       x: (e?.x || e?.clientX) - (this._canvasRect?.x || 0),
