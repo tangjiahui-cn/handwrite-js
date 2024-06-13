@@ -2,6 +2,10 @@
 
 A js library for hand-signature, which support any web platform.
 
+## New Repository
+
+Move to [https://github.com/tangjiahui-cn/signature-js](https://github.com/tangjiahui-cn/signature-js)
+
 ## Features
 - Support Platform: Mobile, Web.
 - Support pen tip handWriting.
