@@ -1,4 +1,4 @@
-## signature-js
+## handwrite-js
 
 A front signature library, which support any web platform.
 
