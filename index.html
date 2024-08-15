@@ -9,25 +9,27 @@
     />
     <style>
       body {
-        padding: 0;
         margin: 0;
+        padding: 16px;
+        overflow: hidden;
       }
     </style>
   </head>
   <body>
-    <div id="dom" style="margin-top: 20px; margin-left: 20px;"></div>
-    <script src="./lib/index.js"></script>
+    <div id="dom" class="area"></div>
+    <div id="dom2" class="area"></div>
     <script type="module">
-      import BeautifulSignature from './src/index';
-      // import BeautifulSignature from './es';
-      // const BeautifulSignature = window.BeautifulSignature;
+      import { HandWrite } from './src/index.ts';
+
       const dom = document.getElementById('dom');
-      const beautifulSignature = new BeautifulSignature({
-        width: 300,
+      const dom2 = document.getElementById('dom2');
+
+      const handWrite = new HandWrite({
+        width: 350,
         height: 600,
       });
 
-      beautifulSignature.mount(dom);
+      handWrite.mount(dom);
     </script>
   </body>
 </html>

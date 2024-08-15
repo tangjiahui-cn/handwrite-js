@@ -41,7 +41,7 @@ export default defineConfig({
   input: './src/index.ts',
   output: [
     {
-      dir: 'lib',
+      dir: 'umd',
       format: 'umd',
       name: toHumpStyle(pkg.name, true),
     },

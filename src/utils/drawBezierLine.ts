@@ -4,7 +4,7 @@
  * @author tangjiauhi
  * @date 2024/5/14
  */
-import { Point } from '../types';
+import { Point } from '..';
 
 export default function drawBezierLine(
   startPoint: Point,
