@@ -4,13 +4,13 @@
  * @author tangjiahui
  * @date 2024/5/15
  */
-import { rimraf, rimrafSync } from 'rimraf';
+import { rimrafSync } from 'rimraf';
 import {defineConfig, OutputOptions} from 'rollup';
 import typescript from '@rollup/plugin-typescript';
 import terser from '@rollup/plugin-terser';
 import json from '@rollup/plugin-json';
 
-const VAR_NAME = 'HandWrite';
+const VAR_NAME = 'handWriteSdk'; // window[VAR_NAME]
 const list = [
   {
     dir: 'es',
