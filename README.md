@@ -13,10 +13,14 @@
 In Html.
 
 ```html
-<div id="dom" style="width: 300px;height: 500px;border: 1px solid #ccc;"></div>
+<script src="https://unpkg.com/handwrite-js/umd/index.js"></script>
+<div style="display: inline-block; border: 1px solid #ccc">
+    <div id="dom" style="width: 300px; height: 500px"></div>
+</div>
 <script>
+    const { HandWrite } = window.HandWrite;
     const handWrite = new HandWrite({
-        dom: document.getElementById('dom')
+        dom: document.getElementById("dom"),
     });
     // handWrite.unmount(); // 卸载
 </script>
