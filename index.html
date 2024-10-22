@@ -16,20 +16,7 @@
     </style>
   </head>
   <body>
-    <div id="dom" class="area"></div>
-    <div id="dom2" class="area"></div>
-    <script type="module">
-      import { HandWrite } from './src/index.ts';
-
-      const dom = document.getElementById('dom');
-      const dom2 = document.getElementById('dom2');
-
-      const handWrite = new HandWrite({
-        width: 350,
-        height: 600,
-      });
-
-      handWrite.mount(dom);
-    </script>
+    <div id="root"></div>
+    <script src="./playground/main.tsx" type="module" rel="prefetch"></script>
   </body>
 </html>

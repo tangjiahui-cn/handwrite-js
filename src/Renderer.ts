@@ -1,16 +1,21 @@
 /**
  * Renderer
- * 
+ *
  * @description render point to canvas.
  */
 import { Point } from '.';
 import drawBezierLine from './utils/drawBezierLine';
+import { getImgFromUrl } from './utils/getImgFromUrl';
 
-interface HandWriteOptions {
-  color: string; // pen color
-  size: number; // pen size
-  background: string; // canvas background
+export interface PenAttributes {
+  size: number;
+  color: string;
 }
+
+export const INIT_PEN_ATTRIBUTES: PenAttributes = {
+  color: '#000',
+  size: 4,
+};
 
 export class Renderer {
   private lastPoint: Point | null = null;
@@ -18,8 +23,7 @@ export class Renderer {
   private canvasEl: HTMLCanvasElement | null = null;
   private ctx: CanvasRenderingContext2D | null = null;
 
-  // use canvas.
-  public use(canvas: HTMLCanvasElement) {
+  public init(canvas: HTMLCanvasElement) {
     this.canvasEl = canvas;
     this.ctx = canvas.getContext('2d');
 
@@ -27,18 +31,42 @@ export class Renderer {
     this.setStyle();
   }
 
-  public add(point: Point) {
+  public addPoint(point: Point) {
     this.pointList.push(point);
     this.flush();
   }
 
-  public clear() {
+  public clearPoint() {
     this.pointList = [];
     this.lastPoint = null;
   }
 
-  public getPointList() {
-    return this.pointList;
+  public clear() {
+    this.clearPoint();
+    this.setBackground();
+  }
+
+  public setBase64(base64: string) {
+    getImgFromUrl(base64).then((img) => {
+      this.ctx?.drawImage(img, 0, 0);
+    });
+  }
+
+  public setBackground(bgColor?: string) {
+    if (!this.canvasEl) return;
+    if (bgColor) {
+      this.ctx!.fillStyle = bgColor;
+    }
+    this.ctx!.fillRect(0, 0, this.canvasEl.width, this.canvasEl.height);
+  }
+
+  public setPen(attributes: PenAttributes) {
+    if (attributes?.size) {
+      this.ctx!.lineWidth = attributes.size;
+    }
+    if (attributes?.color) {
+      this.ctx!.strokeStyle = attributes.color;
+    }
   }
 
   // render to canvas.
@@ -68,18 +96,11 @@ export class Renderer {
       return;
     }
 
-    // pen style options.
-    const options: HandWriteOptions = { color: 'black', size: 5, background: 'white' };
-
-    // set canvas style.
-    this.canvasEl.style.border = '1px solid black';
-    this.canvasEl.style.backgroundColor = options.background;
-
-    // set ctx style.
+    // this.canvasEl.style.border = '1px solid black';
     this.ctx = this.canvasEl.getContext('2d');
-    this.ctx!.lineWidth = options.size;
-    this.ctx!.strokeStyle = options.color;
     this.ctx!.lineJoin = 'round'; // 转折处圆形
     this.ctx!.lineCap = 'round'; // 末端圆形
+    this.setBackground('white');
+    this.setPen(INIT_PEN_ATTRIBUTES);
   }
 }
