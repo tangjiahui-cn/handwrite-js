@@ -4,8 +4,9 @@
       "ESNext",
       "DOM"
     ],
-    "target": "es2016",
-    "module": "commonjs",
+    "target": "ES5",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "noImplicitThis": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

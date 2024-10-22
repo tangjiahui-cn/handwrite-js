@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import { useEffect, useRef, useState } from 'react';
-import { HandWrite, INIT_PEN_ATTRIBUTES } from '../src/index';
+import { HandWrite, INIT_PEN_ATTRIBUTES } from '../src';
 import { Button, ColorPicker, message, Slider, Space } from 'antd';
 
 function useUpdateEffect(cb: () => any, dependencies: any[]) {

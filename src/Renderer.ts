@@ -3,7 +3,7 @@
  *
  * @description render point to canvas.
  */
-import { Point } from '.';
+import type { Point } from '.';
 import drawBezierLine from './utils/drawBezierLine';
 import { getImgFromUrl } from './utils/getImgFromUrl';
 

@@ -1,17 +1,21 @@
 {
   "name": "handwrite-js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
-  "type": "module",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "types/index.d.ts",
   "private": false,
   "scripts": {
     "dev": "vite",
-    "build": "rollup -c rollup.config.js"
+    "build": "pnpm build:types && rollup -c rollup.config.ts --configPlugin typescript",
+    "build:types": "rimraf types && tsc -p ./tsconfig-types.json"
   },
   "files": [
     "es",
-    "lib"
+    "lib",
+    "types",
+    "umd"
   ],
   "keywords": [],
   "author": "",
@@ -26,6 +30,7 @@
     "prettier": "^3.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "rimraf": "^6.0.1",
     "rollup": "^4.17.2",
     "tslib": "^2.6.2",
     "typescript": "^5.4.5",
