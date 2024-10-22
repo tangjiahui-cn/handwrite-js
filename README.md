@@ -18,7 +18,7 @@ In Html.
     <div id="dom" style="width: 300px; height: 500px"></div>
 </div>
 <script>
-    const { HandWrite } = window.HandWrite;
+    const { HandWrite } = window.handWriteSdk;
     const handWrite = new HandWrite({
         dom: document.getElementById("dom"),
     });
@@ -29,8 +29,8 @@ In Html.
 In React.
 
 ```tsx
-import {HandWrite} from 'HandWrite'
-import {useRef} from "react";
+import { HandWrite } from 'handWrite-js'
+import { useRef } from "react";
 
 function Page() {
   const handWriteRef = useRef<HandWrite>();
@@ -47,7 +47,8 @@ function Page() {
   }, []);
 
   return (
-    <div style={{width: 300, height: 500, border: '1px solid #ccc'}} ref={domRef}>
+    <div style="display: inline-block; border: 1px solid #ccc">
+      <div ref="domRef" style="width: 300px; height: 500px"/>
     </div>
   )
 }
@@ -57,27 +58,29 @@ function Page() {
 In Vue.
 
 ```vue
-
 <script setup>
-  import {ref, onMounted, onUnmounted} from "vue";
-  import {HandWrite} from "HandWrite";
+  import { ref, onMounted, onUnmounted } from "vue";
+  import { HandWrite } from "handWrite-js";
 
   const domRef = ref();
   let handWrite = new HandWrite();
 
   onMounted(() => {
-    handWrite.mount?.(domRef.value)
-  })
-  
+    handWrite.mount?.(domRef.value);
+  });
+
   onUnmounted(() => {
-    handWrite?.unmount?.()
-    handWrite = undefined
-  })
+    handWrite?.unmount?.();
+    handWrite = undefined;
+  });
 </script>
 
 <template>
-  <div ref="domRef" style="width: 300px;height: 500px;border: 1px solid #ccc;" />
+  <div style="display: inline-block; border: 1px solid #ccc">
+    <div ref="domRef" style="width: 300px; height: 500px" />
+  </div>
 </template>
+
 ```
 
 ## 本地调试
