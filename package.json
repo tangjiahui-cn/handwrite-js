@@ -1,11 +1,12 @@
 {
   "name": "handwrite-js",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "types/index.d.ts",
   "private": false,
+  "author": "tangjiahui-cn",
   "scripts": {
     "dev": "vite",
     "build": "pnpm build:types && rollup -c rollup.config.ts --configPlugin typescript",
@@ -17,8 +18,23 @@
     "types",
     "umd"
   ],
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tangjiahui-cn/handWrite-js.git"
+  },
+  "keywords": [
+    "handwrite-js",
+    "手写库",
+    "前端手写库",
+    "自定义画笔",
+    "custom",
+    "react",
+    "vue",
+    "html"
+  ],
+  "bugs": {
+    "url": "https://github.com/tangjiahui-cn/handWrite-js/issues"
+  },
   "license": "ISC",
   "devDependencies": {
     "@rollup/plugin-json": "^6.1.0",
