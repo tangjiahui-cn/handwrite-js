@@ -13,7 +13,7 @@
 In Html.
 
 ```html
-<div id="dom" style="width: 300px;height: 500px;"></div>
+<div id="dom" style="width: 300px;height: 500px;border: 1px solid #ccc;"></div>
 <script>
     const handWrite = new HandWrite({
         dom: document.getElementById('dom')
@@ -43,7 +43,7 @@ function Page() {
   }, []);
 
   return (
-    <div style={{width: 300, height: 500}} ref={domRef}>
+    <div style={{width: 300, height: 500, border: '1px solid #ccc'}} ref={domRef}>
     </div>
   )
 }
@@ -72,7 +72,7 @@ In Vue.
 </script>
 
 <template>
-  <div ref="domRef" style="width: 300px;height: 500px;" />
+  <div ref="domRef" style="width: 300px;height: 500px;border: 1px solid #ccc;" />
 </template>
 ```
 
