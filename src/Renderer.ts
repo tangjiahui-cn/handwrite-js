@@ -72,7 +72,7 @@ export class Renderer {
   // render to canvas.
   private flush() {
     if (!this.ctx) {
-      throw new Error('Please use the "use" method to set the canvas first');
+      throw new Error('Please use the "use" method to set the canvas at first.');
     }
 
     if (!this.pointList.length) {
