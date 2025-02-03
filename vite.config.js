@@ -10,6 +10,7 @@ export default defineConfig ({
     port: 9999,
     host: '0.0.0.0'
   },
+  base: "./",
   plugins: [
     createHtmlPlugin({
       minify: true,
