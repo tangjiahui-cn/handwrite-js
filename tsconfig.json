@@ -4,6 +4,7 @@
       "ESNext",
       "DOM"
     ],
+    "noEmit": true,
     "target": "ES5",
     "module": "ESNext",
     "moduleResolution": "Bundler",
