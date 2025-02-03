@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "vite",
     "build": "pnpm build:types && rollup -c rollup.config.ts --configPlugin typescript",
-    "build:types": "rimraf types && tsc -p ./tsconfig-types.json"
+    "build:types": "rimraf types && tsc -p ./tsconfig-types.json",
+    "build:github-page": "cross-env deploy=github tsc -b && vite build"
   },
   "files": [
     "es",
@@ -43,6 +44,7 @@
     "@types/react": "^18.3.11",
     "@types/react-dom": "^18.3.1",
     "antd": "^5.21.5",
+    "cross-env": "^7.0.3",
     "prettier": "^3.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -50,9 +52,13 @@
     "rollup": "^4.17.2",
     "tslib": "^2.6.2",
     "typescript": "^5.4.5",
-    "vite": "^5.2.11"
+    "vite": "^5.2.11",
+    "vite-plugin-html": "^3.2.2"
   },
   "engines": {
     "node": ">=16.0.0 <17.5.0"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.13"
   }
 }

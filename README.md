@@ -2,6 +2,9 @@
 
 一个js手写库，支持Web端、H5端，并提供基础API控制。
 
+## 在线预览
+[https://tangjiahui-cn.github.io/handwrite-js](https://tangjiahui-cn.github.io/big-screen)
+
 ## 功能
 - ✅ 同时支持web端、h5端。
 - ✅ 支持流行前端框架，例如：react、vue等。
