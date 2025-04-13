@@ -1,5 +1,9 @@
 /**
  * HandleWrite-js
+ *
+ * @author tangjiahui
+ * @date 2025/4/13
+ * @description 支持前端手签。
  */
 
 import { Renderer, PenAttributes } from './Renderer';
@@ -8,12 +12,15 @@ import { isMobile } from './utils/isMobile';
 export type { PenAttributes } from './Renderer';
 export { INIT_PEN_ATTRIBUTES } from './Renderer';
 
-// 点坐标（相对于画布左上角）
+type Unmount = () => void;
+
+/** 收集点坐标 */
 export interface Point {
   x: number;
   y: number;
 }
 
+/** 配置项 */
 export interface HandWriteOptions {
   width?: number;
   height?: number;
@@ -22,11 +29,16 @@ export interface HandWriteOptions {
 
 const _isMobile: boolean = isMobile();
 export class HandWrite {
-  private canvasEl: HTMLCanvasElement | null = null; // canvas element.
-  private renderer: Renderer = new Renderer(); // renderer
-  private options: HandWriteOptions; // handWrite config
-  private unmountListener: (() => void) | undefined; // unmount listener callback
-  private _haveBeenMount: boolean = false; // if have been mount the canvas;
+  /** canvas元素 */
+  private canvasEl: HTMLCanvasElement | null = null;
+  /** 渲染器 */
+  private renderer: Renderer = new Renderer();
+  /** 配置项 */
+  private options: HandWriteOptions;
+  /** 卸载函数 */
+  private unmountListener: Unmount | undefined;
+  /** 是否挂载变量 */
+  private _haveBeenMount: boolean = false;
 
   constructor(options: HandWriteOptions) {
     this.options = options;
@@ -35,9 +47,10 @@ export class HandWrite {
     }
   }
 
+  /** 挂载dom */
   public mount(dom: HTMLElement) {
     if (!dom) {
-      throw new Error('mount dom is null.');
+      throw new Error('mount dom must be exist.');
     }
 
     if (this._haveBeenMount) {
@@ -49,13 +62,16 @@ export class HandWrite {
     const height: number = this.options?.height || rectInfo.height || 0;
     this.canvasEl = createCanvas(width, height);
     dom.appendChild(this.canvasEl);
-    // append listener to canvas
+
+    /** 给canvas添加点收集监听器 */
     this.unmountListener = this.appendListener(this.canvasEl);
-    // the renderer bind to canvas
+    /** 初始化渲染器 */
     this.renderer.init(this.canvasEl);
+    /** 挂载标识符设置 */
     this._haveBeenMount = true;
   }
 
+  /** 卸载 */
   public unmount() {
     if (!this.canvasEl) return;
     this?.unmountListener?.();
@@ -65,10 +81,12 @@ export class HandWrite {
     this._haveBeenMount = false;
   }
 
+  /** 清空画板 */
   public clear() {
     this.renderer.clear();
   }
 
+  /** 下载绘制内容 */
   public download(filename = '签名.png') {
     const base64: string = this.getBase64();
     let a: HTMLAnchorElement | null = document.createElement('a');
@@ -79,14 +97,17 @@ export class HandWrite {
     a = null;
   }
 
+  /** 获取当前画板的base64值 */
   public getBase64(mime = 'image/png'): string {
     return this.canvasEl?.toDataURL?.(mime) || '';
   }
 
+  /** 使用base64内容填充画板 */
   public setBase64(base64: string): void {
     this.setImgUrl(base64);
   }
 
+  /** 使用图片填充画板 */
   public setImgUrl(url: string): void {
     if (!this.canvasEl) {
       throw new Error('canvasEl is null.');
@@ -98,11 +119,12 @@ export class HandWrite {
     this.renderer.setBackground(background);
   }
 
-  public setPen(attributes: PenAttributes) {
+  public setPen(attributes: Partial<PenAttributes>) {
     this.renderer.setPen(attributes);
   }
 
-  private appendListener(canvas: HTMLCanvasElement): () => void {
+  /** 注册收集点的事件 */
+  private appendListener(canvas: HTMLCanvasElement): Unmount {
     const originPoint: Point = canvas.getBoundingClientRect();
 
     const startEventName = _isMobile ? 'touchstart' : 'pointerdown';
@@ -151,10 +173,11 @@ function createCanvas(width: number, height: number): HTMLCanvasElement {
   return canvas;
 }
 
+/** 获取坐标点 */
 function getPoint(e: any, originPoint: Point) {
-  e = e.touches?.[0] || e;
+  e = _isMobile ? e?.touches?.[0] : e;
   return {
-    x: (e?.x || e?.clientX) - originPoint.x,
-    y: (e?.y || e?.clientY) - originPoint.y,
+    x: e?.clientX - originPoint.x,
+    y: e?.clientY - originPoint.y,
   };
 }

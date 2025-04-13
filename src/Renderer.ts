@@ -27,31 +27,36 @@ export class Renderer {
     this.canvasEl = canvas;
     this.ctx = canvas.getContext('2d');
 
-    // set draw style.
+    /** 设置绘制样式 */
     this.setStyle();
   }
 
+  /** 添加点 */
   public addPoint(point: Point) {
     this.pointList.push(point);
     this.flush();
   }
 
+  /** 清空点 */
   public clearPoint() {
     this.pointList = [];
     this.lastPoint = null;
   }
 
+  /** 清空渲染 */
   public clear() {
     this.clearPoint();
     this.setBackground();
   }
 
+  /** 设置base64对应内容到页面 */
   public setBase64(base64: string) {
     getImgFromUrl(base64).then((img) => {
       this.ctx?.drawImage(img, 0, 0);
     });
   }
 
+  /** 设置画板背景色 */
   public setBackground(bgColor?: string) {
     if (!this.canvasEl) return;
     if (bgColor) {
@@ -60,7 +65,8 @@ export class Renderer {
     this.ctx!.fillRect(0, 0, this.canvasEl.width, this.canvasEl.height);
   }
 
-  public setPen(attributes: PenAttributes) {
+  /** 设置画笔属性 */
+  public setPen(attributes: Partial<PenAttributes>) {
     if (attributes?.size) {
       this.ctx!.lineWidth = attributes.size;
     }
@@ -69,7 +75,7 @@ export class Renderer {
     }
   }
 
-  // render to canvas.
+  /** 绘制 */
   private flush() {
     if (!this.ctx) {
       throw new Error('Please use the "use" method to set the canvas at first.');
@@ -91,12 +97,12 @@ export class Renderer {
     this.lastPoint = endPoint;
   }
 
+  /** 设置绘制样式 */
   private setStyle() {
     if (!this.canvasEl) {
       return;
     }
 
-    // this.canvasEl.style.border = '1px solid black';
     this.ctx = this.canvasEl.getContext('2d');
     this.ctx!.lineJoin = 'round'; // 转折处圆形
     this.ctx!.lineCap = 'round'; // 末端圆形

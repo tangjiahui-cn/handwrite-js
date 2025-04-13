@@ -1,16 +1,17 @@
 ## handwrite-js
 
-一个js手写库，支持Web端、H5端，并提供基础API控制。
+手写签名 js-sdk ，同时支持`web`和`h5`，以及各类前端框架或原生html中使用。
 
 ## 在线预览
 [https://tangjiahui-cn.github.io/handwrite-js](https://tangjiahui-cn.github.io/handwrite-js)
 
-## 功能
-- ✅ 同时支持web端、h5端。
-- ✅ 支持流行前端框架，例如：react、vue等。
-- ✅ 支持修改画笔颜色、粗细。
+## 特点
+- ✅ 支持任意前端框架（React、Vue等）。
+- ✅ 支持web端、h5端。
+- ✅ 支持修改画笔（颜色、粗细）。
 - ✅ 支持修改画布背景。
-- ✅ 支持导入、导出签名。
+- ✅ 支持导入、导出、下载。
+- ✅ 大小仅5kb。
 
 ## 基本使用
 In Html.
@@ -97,19 +98,18 @@ pnpm dev
 ## API
 ### 基础 api：
 
-| 名称          | 描述                 |
-|-------------|--------------------|
-| mount (dom) | 挂载到dom节点（重复挂载会报错）  |
-| unmount ()  | 卸载当前实例             |
-| clear () | 清空画布（重置到上一次设置的背景色） |
+|名称|描述|
+|---|---|
+|mount(dom)|挂载到dom节点（重复挂载会报错）|
+|unmount()|卸载当前实例|
+|clear()|清空画布（重置到上一次设置的背景色）|
 
-### 扩展 api：
-
-| 名称                       | 描述     |
-|--------------------------|--------|
-| download (filename)      | 下载签名到本地 |
-| getBase64 ()             | 获取当前签名的base64 |
-| setBase64 (base64)       | 设置base64到签名 |
-| setImgUrl (url)          | 设置url的图片为签名 |
-| setBackground (color)    | 修改画布背景 |
-| setPen ({ size, color }) | 设置画笔属性（大小、颜色） |
+### 高级 api:
+|名称 | 描述|
+|---|---|
+|download(filename)|下载签名图片/其他格式|
+|getBase64()|获取签名base64|
+|setBase64(base64)|设置签名base64到画布|
+|setImageUrl(url)|设置url对应图片到画布|
+|setBackground(color)|设置背景颜色|
+|setPen({size?, color?})|设置画笔|
