@@ -52,7 +52,7 @@ function Page() {
 
   return (
     <div style="display: inline-block; border: 1px solid #ccc">
-      <div ref="domRef" style="width: 300px; height: 500px"/>
+      <div ref={domRef} style="width: 300px; height: 500px"/>
     </div>
   )
 }
